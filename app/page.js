@@ -62,9 +62,7 @@ export default function Home() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 15 }}>
           <img src="/logo.png" style={{ height: 50 }} />
-          <span style={{ fontSize: 22, fontWeight: "bold", letterSpacing: 2 }}>
-            MIS Fitness
-          </span>
+          {/* Nome do site removido */}
         </div>
 
         <nav style={{ display: "flex", gap: 30, fontWeight: 500 }}>
