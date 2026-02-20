@@ -40,6 +40,12 @@ export default function Home() {
     setCarrinho([...carrinho, produto]);
   }
 
+  function removerProduto(index) {
+    const novoCarrinho = [...carrinho];
+    novoCarrinho.splice(index, 1);
+    setCarrinho(novoCarrinho);
+  }
+
   function total() {
     return carrinho
       .reduce((acc, item) => acc + item.preco, 0)
@@ -49,7 +55,7 @@ export default function Home() {
   return (
     <main style={{ fontFamily: "Arial", background: "#fff", minHeight: "100vh" }}>
 
-      {/* HEADER PROFISSIONAL */}
+      {/* HEADER */}
       <header
         style={{
           display: "flex",
@@ -62,7 +68,7 @@ export default function Home() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 15 }}>
           <img src="/logo.png" style={{ height: 50 }} />
-          {/* Nome do site removido */}
+          {/* Nome removido */}
         </div>
 
         <nav style={{ display: "flex", gap: 30, fontWeight: 500 }}>
@@ -84,29 +90,64 @@ export default function Home() {
         style={{
           padding: 20,
           background: "#fafafa",
-          margin: "0 40px",
+          margin: "20px 40px",
           borderRadius: 10,
         }}
       >
         <h2>Carrinho ({carrinho.length})</h2>
+
+        {carrinho.length === 0 ? (
+          <p>O carrinho está vazio.</p>
+        ) : (
+          <ul>
+            {carrinho.map((item, index) => (
+              <li key={index} style={{ marginBottom: 5 }}>
+                {item.nome} - {item.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                <button
+                  onClick={() => removerProduto(index)}
+                  style={{
+                    marginLeft: 10,
+                    background: "#ff69b4",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    padding: "2px 6px",
+                    fontSize: 12,
+                  }}
+                >
+                  Remover
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
         <p style={{ fontWeight: "bold" }}>Total: {total()}</p>
 
         <a
-          href="https://wa.me/5588997427649?text=Olá,%20vim%20pelo%20site%20da%20loja%20MIS%20Fitness%20e%20quero%20finalizar%20meu%20pedido."
+          href={
+            carrinho.length > 0
+              ? `https://wa.me/5588997427649?text=Olá, vim pelo site da loja MIS Fitness e quero finalizar meu pedido. Itens: ${carrinho.map(p => p.nome).join(
+                  ", "
+                )} Total: ${total()}`
+              : "#"
+          }
           target="_blank"
+          style={{ pointerEvents: carrinho.length === 0 ? "none" : "auto" }}
         >
           <button
             style={{
-              background: "#000",
+              background: carrinho.length === 0 ? "#ccc" : "#000",
               color: "#fff",
               padding: "12px 20px",
               border: "none",
               borderRadius: 6,
-              cursor: "pointer",
+              cursor: carrinho.length === 0 ? "not-allowed" : "pointer",
               marginTop: 10,
             }}
           >
-            Finalizar no WhatsApp
+            Finalizar Pedido no WhatsApp
           </button>
         </a>
       </div>
@@ -170,6 +211,24 @@ export default function Home() {
           </div>
         ))}
       </div>
+
+      {/* RODAPÉ */}
+      <footer
+        style={{
+          background: "#000",
+          color: "#fff",
+          textAlign: "center",
+          padding: "30px 20px",
+          marginTop: 40,
+        }}
+      >
+        <p>© {new Date().getFullYear()} MIS Fitness. Todos os direitos reservados.</p>
+        <div style={{ marginTop: 10 }}>
+          <a href="#" style={{ color: "#ff69b4", margin: "0 10px" }}>Instagram</a>
+          <a href="#" style={{ color: "#ff69b4", margin: "0 10px" }}>Facebook</a>
+          <a href="#" style={{ color: "#ff69b4", margin: "0 10px" }}>WhatsApp</a>
+        </div>
+      </footer>
 
     </main>
   );
