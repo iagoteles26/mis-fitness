@@ -37,54 +37,103 @@ export default function Home() {
   }
 
   function total() {
-    return carrinho.reduce((acc, item) => acc + item.preco, 0).toFixed(2);
+    return carrinho
+      .reduce((acc, item) => acc + item.preco, 0)
+      .toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   }
 
   return (
-    <main style={{ padding: 20, fontFamily: "Arial" }}>
+    <main style={{ fontFamily: "Arial", background: "#fff", minHeight: "100vh" }}>
 
-      <h1 style={{ textAlign: "center", fontSize: 40 }}>
-        MIS Fitness
-      </h1>
+      {/* HEADER */}
+      <div style={{ textAlign: "center", padding: 30, borderBottom: "1px solid #eee" }}>
+        <h1 style={{ fontSize: 42, color: "#000", marginBottom: 5 }}>
+          MIS Fitness
+        </h1>
+        <p style={{ color: "#ff69b4", fontSize: 18 }}>
+          Sua melhor versão começa aqui ✨
+        </p>
+      </div>
 
-      <p style={{ textAlign: "center" }}>
-        Sua melhor versão começa aqui ✨
-      </p>
+      {/* CARRINHO */}
+      <div style={{ padding: 20, background: "#fafafa" }}>
+        <h2 style={{ marginBottom: 5 }}>
+          Carrinho ({carrinho.length})
+        </h2>
+        <p style={{ fontWeight: "bold", fontSize: 18 }}>
+          Total: {total()}
+        </p>
 
-      <h2>Carrinho ({carrinho.length})</h2>
-      <p>Total: R$ {total()}</p>
+        <a
+          href="https://wa.me/5588997427649?text=Olá,%20vim%20pelo%20site%20da%20loja%20MIS%20Fitness%20e%20quero%20finalizar%20meu%20pedido."
+          target="_blank"
+        >
+          <button style={{
+            background: "#000",
+            color: "#fff",
+            padding: "12px 20px",
+            border: "none",
+            borderRadius: 6,
+            cursor: "pointer",
+            marginTop: 10
+          }}>
+            Finalizar no WhatsApp
+          </button>
+        </a>
+      </div>
 
-      <a
-        href="https://wa.me/5588997427649?text=Olá,%20vim%20pelo%20site%20da%20loja%20MIS%20Fitness%20e%20quero%20finalizar%20meu%20pedido."
-        target="_blank"
-      >
-        <button>
-          Finalizar no WhatsApp
-        </button>
-      </a>
-
-      <hr />
-
+      {/* PRODUTOS */}
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-        gap: 20
+        gap: 25,
+        padding: 30
       }}>
         {produtos.map(produto => (
           <div key={produto.id} style={{
-            border: "1px solid #ddd",
-            padding: 10,
-            borderRadius: 10
+            border: "1px solid #eee",
+            borderRadius: 12,
+            overflow: "hidden",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
+            background: "#fff"
           }}>
-            <img src={produto.imagem} width="100%" />
+            <img
+              src={produto.imagem}
+              style={{ width: "100%", height: 300, objectFit: "cover" }}
+            />
 
-            <h3>{produto.nome}</h3>
+            <div style={{ padding: 15 }}>
+              <h3 style={{ marginBottom: 8 }}>
+                {produto.nome}
+              </h3>
 
-            <p>R$ {produto.preco}</p>
+              <p style={{
+                color: "#ff69b4",
+                fontWeight: "bold",
+                fontSize: 18
+              }}>
+                {produto.preco.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
 
-            <button onClick={() => adicionarCarrinho(produto)}>
-              Adicionar ao carrinho
-            </button>
+              <button
+                onClick={() => adicionarCarrinho(produto)}
+                style={{
+                  marginTop: 10,
+                  width: "100%",
+                  background: "#000",
+                  color: "#fff",
+                  padding: 10,
+                  border: "none",
+                  borderRadius: 6,
+                  cursor: "pointer"
+                }}
+              >
+                Adicionar ao carrinho
+              </button>
+            </div>
           </div>
         ))}
       </div>
