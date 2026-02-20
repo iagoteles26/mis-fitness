@@ -1,105 +1,94 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Home() {
+  const [carrinho, setCarrinho] = useState([]);
+
   const produtos = [
     {
       id: 1,
-      nome: "Legging Fitness Pro",
-      preco: "R$ 129,90",
-      imagem:
-        "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=600",
+      nome: "Legging Fitness Premium",
+      preco: 129.9,
+      imagem: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=600",
     },
     {
       id: 2,
-      nome: "Top Fitness Elite",
-      preco: "R$ 79,90",
-      imagem:
-        "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600",
+      nome: "Top Fitness Luxo",
+      preco: 89.9,
+      imagem: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600",
     },
     {
       id: 3,
-      nome: "Shorts Performance",
-      preco: "R$ 89,90",
-      imagem:
-        "https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=600",
+      nome: "Shorts Fitness Elegance",
+      preco: 79.9,
+      imagem: "https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=600",
     },
     {
       id: 4,
-      nome: "Conjunto Fitness Premium",
-      preco: "R$ 199,90",
-      imagem:
-        "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?w=600",
-    },
-    {
-      id: 5,
-      nome: "Camiseta Dry Fit",
-      preco: "R$ 69,90",
-      imagem:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
-    },
-    {
-      id: 6,
-      nome: "Jaqueta Esportiva",
-      preco: "R$ 159,90",
-      imagem:
-        "https://images.unsplash.com/photo-1520975916090-3105956dac38?w=600",
+      nome: "Conjunto Fitness Exclusivo",
+      preco: 199.9,
+      imagem: "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?w=600",
     },
   ];
 
+  function adicionarCarrinho(produto) {
+    setCarrinho([...carrinho, produto]);
+  }
+
+  function total() {
+    return carrinho.reduce((acc, item) => acc + item.preco, 0).toFixed(2);
+  }
+
   return (
     <main style={{ padding: 20, fontFamily: "Arial" }}>
-      <h1 style={{ fontSize: 40, textAlign: "center" }}>MIS Fitness</h1>
 
-      <p style={{ textAlign: "center", marginBottom: 40 }}>
-        Sua melhor versão começa aqui 💪
+      <h1 style={{ textAlign: "center", fontSize: 40 }}>
+        MIS Fitness
+      </h1>
+
+      <p style={{ textAlign: "center" }}>
+        Sua melhor versão começa aqui ✨
       </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: 20,
-        }}
+      <h2>Carrinho ({carrinho.length})</h2>
+      <p>Total: R$ {total()}</p>
+
+      <a
+        href="https://wa.me/5500000000000"
+        target="_blank"
       >
-        {produtos.map((produto) => (
-          <div
-            key={produto.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: 10,
-              padding: 15,
-              textAlign: "center",
-            }}
-          >
-            <img
-              src={produto.imagem}
-              style={{
-                width: "100%",
-                height: 300,
-                objectFit: "cover",
-                borderRadius: 10,
-              }}
-            />
+        <button>
+          Finalizar no WhatsApp
+        </button>
+      </a>
 
-            <h2>{produto.nome}</h2>
+      <hr />
 
-            <p style={{ fontSize: 20, fontWeight: "bold" }}>
-              {produto.preco}
-            </p>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: 20
+      }}>
+        {produtos.map(produto => (
+          <div key={produto.id} style={{
+            border: "1px solid #ddd",
+            padding: 10,
+            borderRadius: 10
+          }}>
+            <img src={produto.imagem} width="100%" />
 
-            <button
-              style={{
-                padding: 10,
-                background: "black",
-                color: "white",
-                border: "none",
-                borderRadius: 5,
-                cursor: "pointer",
-              }}
-            >
-              Comprar Agora
+            <h3>{produto.nome}</h3>
+
+            <p>R$ {produto.preco}</p>
+
+            <button onClick={() => adicionarCarrinho(produto)}>
+              Adicionar ao carrinho
             </button>
           </div>
         ))}
       </div>
+
     </main>
   );
 }
