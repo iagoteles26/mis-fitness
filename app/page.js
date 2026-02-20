@@ -55,7 +55,7 @@ export default function Home() {
       <p>Total: R$ {total()}</p>
 
       <a
-        href="https://wa.me/5588997427649?text=Olá%20vim%20pelo%20site%20da%20loja%20MIS%20Fitness%20e%20quero%20finalizar%20meu%20pedido"
+        href="https://wa.me/5588997427649?text=Olá,%20vim%20pelo%20site%20da%20loja%20MIS%20Fitness%20e%20quero%20finalizar%20meu%20pedido."
         target="_blank"
       >
         <button>
