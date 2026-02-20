@@ -53,68 +53,40 @@ export default function Home() {
   }
 
   return (
-    <main style={{ fontFamily: "Arial", background: "#fff", minHeight: "100vh" }}>
+    <div className="min-h-screen bg-white flex flex-col">
 
       {/* HEADER */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "20px 40px",
-          borderBottom: "1px solid #eee",
-          background: "#fff",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 15 }}>
-          <img src="/logo.png" style={{ height: 50 }} />
+      <header className="flex justify-between items-center p-6 border-b border-gray-200">
+        <div className="flex items-center gap-4">
+          <img src="/logo.png" className="h-12" />
           {/* Nome removido */}
         </div>
-
-        <nav style={{ display: "flex", gap: 30, fontWeight: 500 }}>
-          <span style={{ cursor: "pointer" }}>Início</span>
-          <span style={{ cursor: "pointer" }}>Produtos</span>
-          <span style={{ cursor: "pointer" }}>Contato</span>
+        <nav className="flex gap-6 font-medium">
+          <span className="cursor-pointer hover:text-pink-500 transition">Início</span>
+          <span className="cursor-pointer hover:text-pink-500 transition">Produtos</span>
+          <span className="cursor-pointer hover:text-pink-500 transition">Contato</span>
         </nav>
       </header>
 
       {/* FRASE DA MARCA */}
-      <div style={{ textAlign: "center", padding: 30 }}>
-        <p style={{ color: "#ff69b4", fontSize: 18 }}>
-          Sua melhor versão começa aqui ✨
-        </p>
-      </div>
+      <section className="text-center py-8">
+        <p className="text-pink-500 text-lg">Sua melhor versão começa aqui ✨</p>
+      </section>
 
       {/* CARRINHO */}
-      <div
-        style={{
-          padding: 20,
-          background: "#fafafa",
-          margin: "20px 40px",
-          borderRadius: 10,
-        }}
-      >
-        <h2>Carrinho ({carrinho.length})</h2>
+      <section className="bg-gray-50 p-6 mx-6 rounded-lg">
+        <h2 className="text-xl font-semibold mb-3">Carrinho ({carrinho.length})</h2>
 
         {carrinho.length === 0 ? (
           <p>O carrinho está vazio.</p>
         ) : (
-          <ul>
+          <ul className="mb-3">
             {carrinho.map((item, index) => (
-              <li key={index} style={{ marginBottom: 5 }}>
-                {item.nome} - {item.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              <li key={index} className="flex justify-between items-center mb-1">
+                <span>{item.nome} - {item.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
                 <button
                   onClick={() => removerProduto(index)}
-                  style={{
-                    marginLeft: 10,
-                    background: "#ff69b4",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 4,
-                    cursor: "pointer",
-                    padding: "2px 6px",
-                    fontSize: 12,
-                  }}
+                  className="bg-pink-500 text-white px-2 py-1 rounded text-sm hover:bg-pink-600 transition"
                 >
                   Remover
                 </button>
@@ -123,7 +95,7 @@ export default function Home() {
           </ul>
         )}
 
-        <p style={{ fontWeight: "bold" }}>Total: {total()}</p>
+        <p className="font-bold mb-3">Total: {total()}</p>
 
         <a
           href={
@@ -134,102 +106,42 @@ export default function Home() {
               : "#"
           }
           target="_blank"
-          style={{ pointerEvents: carrinho.length === 0 ? "none" : "auto" }}
+          className={`block w-full text-center py-3 rounded ${carrinho.length === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-black text-white hover:bg-gray-800"} transition`}
         >
-          <button
-            style={{
-              background: carrinho.length === 0 ? "#ccc" : "#000",
-              color: "#fff",
-              padding: "12px 20px",
-              border: "none",
-              borderRadius: 6,
-              cursor: carrinho.length === 0 ? "not-allowed" : "pointer",
-              marginTop: 10,
-            }}
-          >
-            Finalizar Pedido no WhatsApp
-          </button>
+          Finalizar Pedido no WhatsApp
         </a>
-      </div>
+      </section>
 
       {/* PRODUTOS */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: 30,
-          padding: 40,
-        }}
-      >
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
         {produtos.map((produto) => (
-          <div
-            key={produto.id}
-            style={{
-              border: "1px solid #eee",
-              borderRadius: 12,
-              overflow: "hidden",
-              boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
-              background: "#fff",
-            }}
-          >
-            <img
-              src={produto.imagem}
-              style={{ width: "100%", height: 300, objectFit: "cover" }}
-            />
-
-            <div style={{ padding: 20 }}>
-              <h3>{produto.nome}</h3>
-
-              <p
-                style={{
-                  color: "#ff69b4",
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
-                {produto.preco.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+          <div key={produto.id} className="border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col">
+            <img src={produto.imagem} className="w-full h-64 object-cover" />
+            <div className="p-4 flex flex-col flex-grow">
+              <h3 className="font-semibold mb-2">{produto.nome}</h3>
+              <p className="text-pink-500 font-bold text-lg mb-3">
+                {produto.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
               </p>
-
               <button
                 onClick={() => adicionarCarrinho(produto)}
-                style={{
-                  width: "100%",
-                  background: "#000",
-                  color: "#fff",
-                  padding: 10,
-                  border: "none",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                }}
+                className="mt-auto bg-black text-white py-2 rounded hover:bg-gray-800 transition"
               >
                 Adicionar ao carrinho
               </button>
             </div>
           </div>
         ))}
-      </div>
+      </section>
 
       {/* RODAPÉ */}
-      <footer
-        style={{
-          background: "#000",
-          color: "#fff",
-          textAlign: "center",
-          padding: "30px 20px",
-          marginTop: 40,
-        }}
-      >
+      <footer className="bg-black text-white text-center py-6 mt-auto">
         <p>© {new Date().getFullYear()} MIS Fitness. Todos os direitos reservados.</p>
-        <div style={{ marginTop: 10 }}>
-          <a href="#" style={{ color: "#ff69b4", margin: "0 10px" }}>Instagram</a>
-          <a href="#" style={{ color: "#ff69b4", margin: "0 10px" }}>Facebook</a>
-          <a href="#" style={{ color: "#ff69b4", margin: "0 10px" }}>WhatsApp</a>
+        <div className="mt-2 flex justify-center gap-4">
+          <a href="#" className="text-pink-500 hover:text-pink-600 transition">Instagram</a>
+          <a href="#" className="text-pink-500 hover:text-pink-600 transition">Facebook</a>
+          <a href="#" className="text-pink-500 hover:text-pink-600 transition">WhatsApp</a>
         </div>
       </footer>
-
-    </main>
+    </div>
   );
 }
