@@ -1,14 +1,15 @@
-
-export const metadata = {
-  title: "MIS Fitness",
-  description: "Sua melhor versão começa aqui",
-};
+import { CartProvider } from "./context/CartContext";
+import Header from "./components/Header";
+import "./globals.css";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body style={{ margin: 0, fontFamily: 'Arial, sans-serif' }}>
-        {children}
+      <body>
+        <CartProvider>
+          <Header />
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
