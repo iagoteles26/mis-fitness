@@ -5,14 +5,18 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [carrinho, setCarrinho] = useState([]);
 
-  // Persistência no localStorage
+  // Persistir carrinho no localStorage
   useEffect(() => {
-    const stored = localStorage.getItem("carrinho");
-    if (stored) setCarrinho(JSON.parse(stored));
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("carrinho");
+      if (stored) setCarrinho(JSON.parse(stored));
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    }
   }, [carrinho]);
 
   const produtos = [
@@ -38,7 +42,7 @@ export default function Home() {
 
       {/* HEADER */}
       <header className="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 w-full max-w-6xl">
-        <img src="/logo.png" className="h-8 sm:h-10" />
+        <img src="/logo.png" className="h-8 sm:h-10" alt="Logo" />
         <div className="relative">
           <span className="text-sm sm:text-base font-medium cursor-pointer">Carrinho</span>
           {carrinho.length > 0 && (
@@ -58,7 +62,7 @@ export default function Home() {
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 p-4 sm:p-6 max-w-6xl w-full">
         {produtos.map((produto) => (
           <div key={produto.id} className="border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col">
-            <img src={produto.imagem} className="w-full h-48 sm:h-56 object-cover" />
+            <img src={produto.imagem} className="w-full h-48 sm:h-56 object-cover" alt={produto.nome} />
             <div className="p-3 sm:p-4 flex flex-col flex-grow">
               <h3 className="font-semibold mb-1 text-sm sm:text-base">{produto.nome}</h3>
               <p className="text-pink-500 font-bold text-sm sm:text-base mb-2">
